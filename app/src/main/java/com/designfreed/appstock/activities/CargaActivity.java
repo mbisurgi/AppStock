@@ -1,0 +1,63 @@
+package com.designfreed.appstock.activities;
+
+import android.app.LoaderManager;
+import android.content.Context;
+import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+import com.designfreed.appstock.R;
+import com.designfreed.appstock.entities.Carga;
+import com.designfreed.appstock.loaders.CargaLoader;
+
+import java.util.List;
+
+public class CargaActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Carga>> {
+    private static final String SERVICE_URL = "http://bybgas.dyndns.org:8080/StockService/services/stockService/getCargaByHojaRuta?";
+    private Long hojaRutaId;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_carga);
+
+        hojaRutaId = (Long) getIntent().getSerializableExtra("id");
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            getLoaderManager().initLoader(0, null, this).forceLoad();
+        } else {
+
+        }
+    }
+
+    @Override
+    public Loader<List<Carga>> onCreateLoader(int i, Bundle bundle) {
+        return new CargaLoader(this, SERVICE_URL, hojaRutaId);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Carga>> loader, List<Carga> cargas) {
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        CargasPagerAdapter pagerAdapter = new CargasPagerAdapter(getSupportFragmentManager(), hojaRutaId, cargas);
+        viewPager.setAdapter(pagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Carga>> loader) {
+
+    }
+}
