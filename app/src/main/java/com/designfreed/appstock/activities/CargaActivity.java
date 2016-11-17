@@ -21,6 +21,7 @@ import java.util.List;
 public class CargaActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Carga>> {
     private static final String SERVICE_URL = "http://bybgas.dyndns.org:8080/StockService/services/stockService/getCargaByHojaRuta?";
     private Long hojaRutaId;
+    private String chofer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class CargaActivity extends AppCompatActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_carga);
 
         hojaRutaId = (Long) getIntent().getSerializableExtra("id");
+        chofer = getIntent().getStringExtra("chofer");
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -47,7 +49,7 @@ public class CargaActivity extends AppCompatActivity implements LoaderManager.Lo
     @Override
     public void onLoadFinished(Loader<List<Carga>> loader, List<Carga> cargas) {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        CargasPagerAdapter pagerAdapter = new CargasPagerAdapter(getSupportFragmentManager(), hojaRutaId, cargas);
+        CargasPagerAdapter pagerAdapter = new CargasPagerAdapter(getSupportFragmentManager(), hojaRutaId, chofer, cargas);
         viewPager.setAdapter(pagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);

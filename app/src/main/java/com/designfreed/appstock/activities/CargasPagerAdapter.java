@@ -17,9 +17,10 @@ public class CargasPagerAdapter extends FragmentPagerAdapter{
     private Carga cargaREPO = null;
     private Carga cargaREN2 = null;
 
-    public CargasPagerAdapter(FragmentManager fm, Long hojaRutaId, List<Carga> cargas) {
+    public CargasPagerAdapter(FragmentManager fm, Long hojaRutaId, String chofer, List<Carga> cargas) {
         super(fm);
         this.parametros.putLong("id", hojaRutaId);
+        this.parametros.putString("chofer", chofer);
         this.cargas = cargas;
 
         for (Carga carga: cargas) {

@@ -18,7 +18,12 @@ import com.designfreed.appstock.entities.Carga;
 import com.designfreed.appstock.entities.ItemCarga;
 import com.designfreed.appstock.loaders.CargaLoader;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -187,6 +192,112 @@ public class FragmentINIC extends Fragment {
         cargarCarga(carga);
 
         return rootView;
+    }
+
+    private JSONObject generarJsonObject(Carga carga) {
+        if (carga == null) {
+            carga = new Carga();
+
+            List<ItemCarga> items = new ArrayList<>();
+
+            ItemCarga garrafa10 = new ItemCarga();
+            garrafa10.setEnvaseId(1);
+            garrafa10.setLleno(Integer.getInteger(lleno10.getText().toString()));
+            garrafa10.setVacio(Integer.getInteger(vacio10.getText().toString()));
+            garrafa10.setAveriado(Integer.getInteger(averiado10.getText().toString()));
+            garrafa10.setRetiro(Integer.getInteger(retiro10.getText().toString()));
+            garrafa10.setEntrega(Integer.getInteger(entrega10.getText().toString()));
+            garrafa10.setCambio(Integer.getInteger(cambio10.getText().toString()));
+
+            ItemCarga garrafa12 = new ItemCarga();
+            garrafa12.setEnvaseId(2);
+            garrafa12.setLleno(Integer.getInteger(lleno12.getText().toString()));
+            garrafa12.setVacio(Integer.getInteger(vacio12.getText().toString()));
+            garrafa12.setAveriado(Integer.getInteger(averiado12.getText().toString()));
+            garrafa12.setRetiro(Integer.getInteger(retiro12.getText().toString()));
+            garrafa12.setEntrega(Integer.getInteger(entrega12.getText().toString()));
+            garrafa12.setCambio(Integer.getInteger(cambio12.getText().toString()));
+
+            ItemCarga garrafa15 = new ItemCarga();
+            garrafa15.setEnvaseId(3);
+            garrafa15.setLleno(Integer.getInteger(lleno15.getText().toString()));
+            garrafa15.setVacio(Integer.getInteger(vacio15.getText().toString()));
+            garrafa15.setAveriado(Integer.getInteger(averiado15.getText().toString()));
+            garrafa15.setRetiro(Integer.getInteger(retiro15.getText().toString()));
+            garrafa15.setEntrega(Integer.getInteger(entrega15.getText().toString()));
+            garrafa15.setCambio(Integer.getInteger(cambio15.getText().toString()));
+
+            ItemCarga garrafa15me = new ItemCarga();
+            garrafa15me.setEnvaseId(4);
+            garrafa15me.setLleno(Integer.getInteger(lleno15me.getText().toString()));
+            garrafa15me.setVacio(Integer.getInteger(vacio15me.getText().toString()));
+            garrafa15me.setAveriado(Integer.getInteger(averiado15me.getText().toString()));
+            garrafa15me.setRetiro(Integer.getInteger(retiro15me.getText().toString()));
+            garrafa15me.setEntrega(Integer.getInteger(entrega15me.getText().toString()));
+            garrafa15me.setCambio(Integer.getInteger(cambio15me.getText().toString()));
+
+            ItemCarga garrafa30 = new ItemCarga();
+            garrafa30.setEnvaseId(5);
+            garrafa30.setLleno(Integer.getInteger(lleno30.getText().toString()));
+            garrafa30.setVacio(Integer.getInteger(vacio30.getText().toString()));
+            garrafa30.setAveriado(Integer.getInteger(averiado30.getText().toString()));
+            garrafa30.setRetiro(Integer.getInteger(retiro30.getText().toString()));
+            garrafa30.setEntrega(Integer.getInteger(entrega30.getText().toString()));
+            garrafa30.setCambio(Integer.getInteger(cambio30.getText().toString()));
+
+            ItemCarga garrafa45 = new ItemCarga();
+            garrafa45.setEnvaseId(6);
+            garrafa45.setLleno(Integer.getInteger(lleno45.getText().toString()));
+            garrafa45.setVacio(Integer.getInteger(vacio45.getText().toString()));
+            garrafa45.setAveriado(Integer.getInteger(averiado45.getText().toString()));
+            garrafa45.setRetiro(Integer.getInteger(retiro45.getText().toString()));
+            garrafa45.setEntrega(Integer.getInteger(entrega45.getText().toString()));
+            garrafa45.setCambio(Integer.getInteger(cambio45.getText().toString()));
+
+            items.add(garrafa10);
+            items.add(garrafa12);
+            items.add(garrafa15);
+            items.add(garrafa15me);
+            items.add(garrafa30);
+            items.add(garrafa45);
+
+            carga.setTipoId(1L);
+            carga.setItems(items);
+        }
+
+        JSONObject jsonCarga = new JSONObject();
+
+        try {
+            JSONObject jsonTipo = new JSONObject();
+            jsonTipo.put("id", 1L);
+            jsonTipo.put("tipo", "Carga inicial");
+
+            jsonCarga.put("id", 0L);
+            jsonCarga.put("hojaRutaId", hojaRutaId);
+            jsonCarga.put("fecha", Calendar.getInstance().getTime().getTime());
+
+            JSONArray jsonItems = new JSONArray();
+
+            for (int i = 0; i < carga.getItems().size(); i++) {
+                JSONObject jsonItem = new JSONObject();
+                jsonItem.put("id", 0L);
+                jsonItem.put("envaseId", carga.getItems().get(i).getEnvaseId());
+                jsonItem.put("lleno", carga.getItems().get(i).getLleno());
+                jsonItem.put("vacio", carga.getItems().get(i).getVacio());
+                jsonItem.put("averiado", carga.getItems().get(i).getAveriado());
+                jsonItem.put("retiro", carga.getItems().get(i).getRetiro());
+                jsonItem.put("entrega", carga.getItems().get(i).getEntrega());
+                jsonItem.put("cambio", carga.getItems().get(i).getCambio());
+
+                jsonItems.put(i, jsonItem);
+            }
+
+            jsonCarga.put("items", jsonItems);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonCarga;
     }
 
     private void cargarCarga(Carga carga) {

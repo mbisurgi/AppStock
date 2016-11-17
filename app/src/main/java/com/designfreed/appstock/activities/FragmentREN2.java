@@ -21,7 +21,7 @@ import com.designfreed.appstock.loaders.CargaLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentREN2 extends Fragment implements LoaderManager.LoaderCallbacks<List<Carga>> {
+public class FragmentREN2 extends Fragment {
     private static final String SERVICE_URL = "http://bybgas.dyndns.org:8080/StockService/services/stockService/getCargaByHojaRuta?";
     private static final Long REN2 = 4L;
     private EditText lleno10;
@@ -62,7 +62,7 @@ public class FragmentREN2 extends Fragment implements LoaderManager.LoaderCallba
     private EditText cambio45;
     private ProgressBar progressBar;
     private Long hojaRutaId;
-    List<Carga> cargas;
+    Carga carga;
 
     public FragmentREN2() {
 
@@ -74,9 +74,7 @@ public class FragmentREN2 extends Fragment implements LoaderManager.LoaderCallba
 
         hojaRutaId = getArguments().getLong("id");
 
-        cargas = new ArrayList<>();
-
-        progressBar = (ProgressBar) rootView.findViewById(R.id.progress);
+        carga = (Carga) getArguments().getSerializable("cargaREN2");
 
         lleno10 = (EditText) rootView.findViewById(R.id.lleno10);
         lleno10.setText(String.valueOf(0));
@@ -186,100 +184,72 @@ public class FragmentREN2 extends Fragment implements LoaderManager.LoaderCallba
         cambio45 = (EditText) rootView.findViewById(R.id.cambio45);
         cambio45.setText(String.valueOf(0));
 
-//        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-//
-//        if (networkInfo != null && networkInfo.isConnected()) {
-//            getActivity().getLoaderManager().initLoader(0, null, this).forceLoad();
-//        } else {
-//            progressBar.setVisibility(View.GONE);
-//        }
-
+        cargarCarga(carga);
 
         return rootView;
     }
 
-    @Override
-    public Loader<List<Carga>> onCreateLoader(int i, Bundle bundle) {
-        return new CargaLoader(getContext(), SERVICE_URL, hojaRutaId);
-    }
+    private void cargarCarga(Carga carga) {
+        if (carga != null) {
+            for (ItemCarga item: carga.getItems()) {
+                if (item.getEnvaseId() == 1) {
+                    lleno10.setText(String.valueOf(item.getLleno()));
+                    vacio10.setText(String.valueOf(item.getVacio()));
+                    averiado10.setText(String.valueOf(item.getAveriado()));
+                    retiro10.setText(String.valueOf(item.getRetiro()));
+                    entrega10.setText(String.valueOf(item.getEntrega()));
+                    cambio10.setText(String.valueOf(item.getCambio()));
+                }
 
-    @Override
-    public void onLoadFinished(Loader<List<Carga>> loader, List<Carga> cargas) {
-        this.cargas = null;
+                if (item.getEnvaseId() == 2) {
+                    lleno12.setText(String.valueOf(item.getLleno()));
+                    vacio12.setText(String.valueOf(item.getVacio()));
+                    averiado12.setText(String.valueOf(item.getAveriado()));
+                    retiro12.setText(String.valueOf(item.getRetiro()));
+                    entrega12.setText(String.valueOf(item.getEntrega()));
+                    cambio12.setText(String.valueOf(item.getCambio()));
+                }
 
-        this.cargas = cargas;
+                if (item.getEnvaseId() == 3) {
+                    lleno15.setText(String.valueOf(item.getLleno()));
+                    vacio15.setText(String.valueOf(item.getVacio()));
+                    averiado15.setText(String.valueOf(item.getAveriado()));
+                    retiro15.setText(String.valueOf(item.getRetiro()));
+                    entrega15.setText(String.valueOf(item.getEntrega()));
+                    cambio15.setText(String.valueOf(item.getCambio()));
+                }
 
-        if (this.cargas != null) {
-            for (Carga carga: cargas) {
-                if (carga.getTipoId().equals(4L)) {
-                    for (ItemCarga item: carga.getItems()) {
-                        if (item.getEnvaseId() == 1) {
-                            lleno10.setText(String.valueOf(item.getLleno()));
-                            vacio10.setText(String.valueOf(item.getVacio()));
-                            averiado10.setText(String.valueOf(item.getAveriado()));
-                            retiro10.setText(String.valueOf(item.getRetiro()));
-                            entrega10.setText(String.valueOf(item.getEntrega()));
-                            cambio10.setText(String.valueOf(item.getCambio()));
-                        }
+                if (item.getEnvaseId() == 4) {
+                    lleno15me.setText(String.valueOf(item.getLleno()));
+                    vacio15me.setText(String.valueOf(item.getVacio()));
+                    averiado15me.setText(String.valueOf(item.getAveriado()));
+                    retiro15me.setText(String.valueOf(item.getRetiro()));
+                    entrega15me.setText(String.valueOf(item.getEntrega()));
+                    cambio15me.setText(String.valueOf(item.getCambio()));
+                }
 
-                        if (item.getEnvaseId() == 2) {
-                            lleno12.setText(String.valueOf(item.getLleno()));
-                            vacio12.setText(String.valueOf(item.getVacio()));
-                            averiado12.setText(String.valueOf(item.getAveriado()));
-                            retiro12.setText(String.valueOf(item.getRetiro()));
-                            entrega12.setText(String.valueOf(item.getEntrega()));
-                            cambio12.setText(String.valueOf(item.getCambio()));
-                        }
+                if (item.getEnvaseId() == 5) {
+                    lleno30.setText(String.valueOf(item.getLleno()));
+                    vacio30.setText(String.valueOf(item.getVacio()));
+                    averiado30.setText(String.valueOf(item.getAveriado()));
+                    retiro30.setText(String.valueOf(item.getRetiro()));
+                    entrega30.setText(String.valueOf(item.getEntrega()));
+                    cambio30.setText(String.valueOf(item.getCambio()));
+                }
 
-                        if (item.getEnvaseId() == 3) {
-                            lleno15.setText(String.valueOf(item.getLleno()));
-                            vacio15.setText(String.valueOf(item.getVacio()));
-                            averiado15.setText(String.valueOf(item.getAveriado()));
-                            retiro15.setText(String.valueOf(item.getRetiro()));
-                            entrega15.setText(String.valueOf(item.getEntrega()));
-                            cambio15.setText(String.valueOf(item.getCambio()));
-                        }
-
-                        if (item.getEnvaseId() == 4) {
-                            lleno15me.setText(String.valueOf(item.getLleno()));
-                            vacio15me.setText(String.valueOf(item.getVacio()));
-                            averiado15me.setText(String.valueOf(item.getAveriado()));
-                            retiro15me.setText(String.valueOf(item.getRetiro()));
-                            entrega15me.setText(String.valueOf(item.getEntrega()));
-                            cambio15me.setText(String.valueOf(item.getCambio()));
-                        }
-
-                        if (item.getEnvaseId() == 5) {
-                            lleno30.setText(String.valueOf(item.getLleno()));
-                            vacio30.setText(String.valueOf(item.getVacio()));
-                            averiado30.setText(String.valueOf(item.getAveriado()));
-                            retiro30.setText(String.valueOf(item.getRetiro()));
-                            entrega30.setText(String.valueOf(item.getEntrega()));
-                            cambio30.setText(String.valueOf(item.getCambio()));
-                        }
-
-                        if (item.getEnvaseId() == 6) {
-                            lleno45.setText(String.valueOf(item.getLleno()));
-                            vacio45.setText(String.valueOf(item.getVacio()));
-                            averiado45.setText(String.valueOf(item.getAveriado()));
-                            retiro45.setText(String.valueOf(item.getRetiro()));
-                            entrega45.setText(String.valueOf(item.getEntrega()));
-                            cambio45.setText(String.valueOf(item.getCambio()));
-                        }
-                    }
-
-                    break;
+                if (item.getEnvaseId() == 6) {
+                    lleno45.setText(String.valueOf(item.getLleno()));
+                    vacio45.setText(String.valueOf(item.getVacio()));
+                    averiado45.setText(String.valueOf(item.getAveriado()));
+                    retiro45.setText(String.valueOf(item.getRetiro()));
+                    entrega45.setText(String.valueOf(item.getEntrega()));
+                    cambio45.setText(String.valueOf(item.getCambio()));
                 }
             }
         }
-        progressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onLoaderReset(Loader<List<Carga>> loader) {
-        this.cargas = null;
-
+    private void reset() {
         lleno10.setText(String.valueOf(0));
         vacio10.setText(String.valueOf(0));
         averiado10.setText(String.valueOf(0));

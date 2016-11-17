@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 Intent intent = new Intent(getApplicationContext(), CargaActivity.class);
                 intent.putExtra("id", hoja.getId());
+                intent.putExtra("chofer", hoja.getChofer());
                 startActivity(intent);
             }
         });
