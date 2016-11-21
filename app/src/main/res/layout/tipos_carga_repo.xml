@@ -3,6 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nombrechofer"
+        android:layout_above="@+id/grid"
+        android:layout_marginLeft="16dp"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@color/chofer"/>
+
     <GridLayout
         android:id="@+id/grid"
         android:layout_centerInParent="true"
@@ -300,4 +310,12 @@
             android:layout_column="6"
             android:layout_row="6"/>
     </GridLayout>
+
+    <Button
+        android:id="@+id/procesar"
+        android:layout_below="@id/grid"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Procesar"/>
 </RelativeLayout>
