@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.designfreed.appstock.entities.Carga;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class CargasPagerAdapter extends FragmentPagerAdapter{
@@ -21,7 +22,7 @@ public class CargasPagerAdapter extends FragmentPagerAdapter{
         super(fm);
         this.parametros.putLong("id", hojaRutaId);
         this.parametros.putString("chofer", chofer);
-        this.cargas = cargas;
+        this.parametros.putSerializable("cargas", (Serializable) cargas);
 
         for (Carga carga: cargas) {
             if (carga.getTipoId().equals(1L)) {
@@ -66,6 +67,10 @@ public class CargasPagerAdapter extends FragmentPagerAdapter{
                 parametros.putSerializable("cargaREN2", cargaREN2);
                 ren2.setArguments(parametros);
                 return ren2;
+            case 4:
+                FragmentCIERRE cierre = new FragmentCIERRE();
+                cierre.setArguments(parametros);
+                return cierre;
         }
 
         return null;
@@ -82,6 +87,8 @@ public class CargasPagerAdapter extends FragmentPagerAdapter{
                 return "REPO";
             case 3:
                 return "REN2";
+            case 4:
+                return "CIERRE";
         }
 
         return null;
@@ -89,6 +96,6 @@ public class CargasPagerAdapter extends FragmentPagerAdapter{
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 }

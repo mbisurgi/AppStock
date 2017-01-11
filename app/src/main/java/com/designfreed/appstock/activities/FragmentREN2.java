@@ -1,6 +1,7 @@
 package com.designfreed.appstock.activities;
 
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -263,9 +264,14 @@ public class FragmentREN2 extends Fragment {
 
             Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
 
-            LoaderManager loader = getActivity().getLoaderManager();
+            //LoaderManager loader = getActivity().getLoaderManager();
 
-            loader.getLoader(0).forceLoad();
+            //loader.getLoader(0).forceLoad();
+
+            Intent intent = new Intent(getContext(), CargaActivity.class);
+            intent.putExtra("id", hojaRutaId);
+            intent.putExtra("chofer", chofer);
+            startActivity(intent);
         }
     }
 

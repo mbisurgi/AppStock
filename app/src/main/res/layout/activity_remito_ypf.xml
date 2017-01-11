@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_remito_ypf"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.designfreed.appstock.activities.RemitoYpfActivity">
+
+    <LinearLayout
+        android:id="@+id/remito_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/fecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/nro_remito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nro de remito"
+            android:inputType="text" />
+
+        <LinearLayout
+            android:id="@+id/garrafa10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Garrafa de 10kg"
+                android:layout_weight="3"/>
+
+            <EditText
+                android:id="@+id/garrafa10cant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Cantidad"
+                android:inputType="number"
+                android:layout_weight="2"/>
+
+            <EditText
+                android:id="@+id/garrafa10pcio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Precio"
+                android:inputType="numberDecimal"
+                android:layout_weight="2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/garrafa15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Garrafa de 15kg"
+                android:layout_weight="3"/>
+
+            <EditText
+                android:id="@+id/garrafa15cant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Cantidad"
+                android:inputType="number"
+                android:layout_weight="2"/>
+
+            <EditText
+                android:id="@+id/garrafa15pcio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Precio"
+                android:inputType="numberDecimal"
+                android:layout_weight="2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/garrafa15me"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Garrafa de 15kg Me"
+                android:layout_weight="3"/>
+
+            <EditText
+                android:id="@+id/garrafa15mecant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Cantidad"
+                android:inputType="number"
+                android:layout_weight="2"/>
+
+            <EditText
+                android:id="@+id/garrafa15mepcio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Precio"
+                android:inputType="numberDecimal"
+                android:layout_weight="2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/garrafa30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Garrafa de 30kg"
+                android:layout_weight="3"/>
+
+            <EditText
+                android:id="@+id/garrafa30cant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Cantidad"
+                android:inputType="number"
+                android:layout_weight="2"/>
+
+            <EditText
+                android:id="@+id/garrafa30pcio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Precio"
+                android:inputType="numberDecimal"
+                android:layout_weight="2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/garrafa45"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Garrafa de 45kg"
+                android:layout_weight="3"/>
+
+            <EditText
+                android:id="@+id/garrafa45cant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Cantidad"
+                android:inputType="number"
+                android:layout_weight="2"/>
+
+            <EditText
+                android:id="@+id/garrafa45pcio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Precio"
+                android:inputType="numberDecimal"
+                android:layout_weight="2"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/procesar"
+        android:layout_below="@+id/remito_data"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Procesar"/>
+
+</RelativeLayout>

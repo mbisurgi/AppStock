@@ -4,15 +4,17 @@ public class HojaRuta {
     private Long id;
     private String chofer;
     private Boolean estado;
+    private Boolean controlStock;
 
     public HojaRuta() {
 
     }
 
-    public HojaRuta(Long id, String chofer, Boolean estado) {
+    public HojaRuta(Long id, String chofer, Boolean estado, Boolean controlStock) {
         this.id = id;
         this.chofer = chofer;
         this.estado = estado;
+        this.controlStock = controlStock;
     }
 
     public Long getId() {
@@ -37,5 +39,13 @@ public class HojaRuta {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Boolean getControlStock() {
+        return controlStock;
+    }
+
+    public void setControlStock(Boolean controlStock) {
+        this.controlStock = controlStock;
     }
 }

@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<HojaRuta>> {
-    private static final String SERVICE_URL = "http://bybgas.dyndns.org:8080/StockService/services/stockService/getHojasByFecha?fecha=22/06/2016";
+    private static final String SERVICE_URL = "http://bybgas.dyndns.org:8080/StockService/services/stockService/getHojasByFecha?fecha=";
 
     private HojaRutaAdapter adapter;
     private ListView hojasListView;
@@ -63,6 +65,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             progressBar.setVisibility(View.GONE);
             emptyView.setText("No hay conexion a internet disponible");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu:
+                Intent intent = new Intent(this, RemitoYpfActivity.class);
+                startActivity(intent);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -29,7 +29,7 @@ public class HojaRutaAdapter extends ArrayAdapter<HojaRuta> {
 
         HojaRuta hojaRuta = getItem(position);
 
-        Boolean est = hojaRuta.getEstado();
+        Boolean est = hojaRuta.getControlStock();
 
         TextView estado = (TextView) listItemView.findViewById(R.id.estado);
 

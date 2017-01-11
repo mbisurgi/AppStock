@@ -6,6 +6,11 @@ import android.content.Context;
 import com.designfreed.appstock.entities.HojaRuta;
 import com.designfreed.appstock.repository.HojaRutaRepository;
 
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 public class HojaRutaLoader extends AsyncTaskLoader<List<HojaRuta>> {
@@ -22,6 +27,12 @@ public class HojaRutaLoader extends AsyncTaskLoader<List<HojaRuta>> {
             return null;
         }
 
-        return HojaRutaRepository.getHojasRuta(url);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+        HojaRuta[] hojas = restTemplate.getForObject(url, HojaRuta[].class);
+
+        return Arrays.asList(hojas);
+        //return HojaRutaRepository.getHojasRuta(url);
     }
 }

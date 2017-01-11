@@ -1,6 +1,9 @@
 package com.designfreed.appstock.repository;
 
-import com.designfreed.appstock.entities.HojaRuta;
+import com.designfreed.appstock.entities.Carga;
+import com.designfreed.appstock.entities.ItemCarga;
+import com.designfreed.appstock.entities.ItemMovimiento;
+import com.designfreed.appstock.entities.Movimiento;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,23 +17,20 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-public class HojaRutaRepository {
-    private HojaRutaRepository() {
+public class MovimientoRepository {
+    private MovimientoRepository() {
 
     }
 
-    public static List<HojaRuta> getHojasRuta(String urlString) {
+    public static List<Movimiento> getMovimientos(String urlString, Long hojaRutaId) {
         String json = "";
 
-        urlString = urlString.concat(formatDate(Calendar.getInstance().getTime()));
+        urlString = urlString.concat("hojaRutaId=").concat(hojaRutaId.toString());
 
-        List<HojaRuta> hojas = new ArrayList<>();
+        List<Movimiento> movimientos = new ArrayList<>();
 
         URL url;
 
@@ -47,7 +47,7 @@ public class HojaRutaRepository {
                 InputStream inputStream = httpURLConnection.getInputStream();
                 json = readFromStream(inputStream);
 
-                hojas = extractHojasRuta(json);
+                movimientos = extractMovimientos(json);
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -59,37 +59,45 @@ public class HojaRutaRepository {
             }
         }
 
-        return hojas;
+        return movimientos;
     }
 
-    private static List<HojaRuta> extractHojasRuta(String json) {
-        List<HojaRuta> hojas = new ArrayList<>();
+    private static List<Movimiento> extractMovimientos(String json) {
+        List<Movimiento> movimientos = new ArrayList<>();
 
         try {
-            JSONArray jsonHojas = new JSONArray(json);
+            JSONArray jsonMovimientos = new JSONArray(json);
 
-            for (int i = 0; i < jsonHojas.length(); i++) {
-                JSONObject jsonHoja = jsonHojas.getJSONObject(i);
+            for (int i = 0; i < jsonMovimientos.length(); i++) {
+                JSONObject jsonMovimiento = jsonMovimientos.getJSONObject(i);
 
-                JSONObject jsonChofer = jsonHoja.getJSONObject("chofer");
+                Long id = jsonMovimiento.getLong("id");
 
-                String nombre = jsonChofer.getString("nombre");
-                String apellido = jsonChofer.getString("apellido");
+                JSONArray jsonItems = jsonMovimiento.getJSONArray("items");
 
-                Long id = jsonHoja.getLong("id");
-                String chofer = apellido + ", " + nombre;
-                Boolean estado = jsonHoja.getBoolean("estado");
-                Boolean controlStock = jsonHoja.getBoolean("controlStock");
+                List<ItemMovimiento> items = new ArrayList<>();
 
-                HojaRuta hoja = new HojaRuta(id, chofer, estado, controlStock);
+                for (int j = 0; j < jsonItems.length(); j++) {
+                    JSONObject jsonItem = jsonItems.getJSONObject(j);
 
-                hojas.add(hoja);
+                    Long itemId = jsonItem.getLong("id");
+                    Integer envaseId = jsonItem.getInt("envaseId");
+                    Integer cantidad = jsonItem.getInt("cantidad");
+
+                    ItemMovimiento item = new ItemMovimiento(itemId, envaseId, cantidad);
+
+                    items.add(item);
+                }
+
+                Movimiento movimiento = new Movimiento(id, items);
+
+                movimientos.add(movimiento);
             }
         } catch (JSONException e) {
 
         }
 
-        return hojas;
+        return movimientos;
     }
 
     private static String readFromStream(InputStream inputStream) throws IOException {
@@ -107,11 +115,5 @@ public class HojaRutaRepository {
         }
 
         return output.toString();
-    }
-
-    private static String formatDate(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-        return formatter.format(date);
     }
 }
